@@ -1,4 +1,12 @@
-const QuotesComponent = ({ item, counter, addQuotes, count, data,setSeeFavList }) => {
+const QuotesComponent = ({
+  item,
+  counter,
+  addQuotes,
+  count,
+  data,
+  addFavQuotes,
+  setSeeFavList,
+}) => {
   return (
     <>
       <div className="min-w-screen min-h-screen  bg-gray-200 flex flex-col  items-center justify-center px-5 py-5">
@@ -40,56 +48,43 @@ const QuotesComponent = ({ item, counter, addQuotes, count, data,setSeeFavList }
                 display: "flex",
                 justifyContent: "center",
                 marginTop: "10px",
-                gap:"10px"
+                gap: "10px",
               }}
             >
               <button
                 onClick={() => addQuotes(item?.id)}
                 className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
               >
-               Add Favourite Quotes
+                {!addFavQuotes?.includes(item) ? 'Add Favourite Quotes':"Added"}
               </button>
 
               <button
                 onClick={() => setSeeFavList(true)}
                 className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
               >
-               See Favourite Quotes
+                See Favourite Quotes
               </button>
             </div>
           </div>
         </div>
         <div className="inline-flex mt-10">
-          {count !== 1 ? (
-            <button
-              onClick={() => counter(-1)}
-              className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
-            >
-              Prev
-            </button>
-          ) : (
-            <button
-              className="bg-gray-300 text-gray-500 cursor-not-allowed font-bold py-2 px-4 rounded-r"
-              disabled
-            >
-              Prev
-            </button>
-          )}
-          {count !== 30 ? (
-            <button
-              onClick={() => counter(1)}
-              className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r"
-            >
-              Next
-            </button>
-          ) : (
-            <button
-              className="bg-gray-300 text-gray-500 cursor-not-allowed font-bold py-2 px-4 rounded-r"
-              disabled
-            >
-              Next
-            </button>
-          )}
+          <button
+            onClick={() => (count === 1 ? null : counter(-1))}
+            className={`bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l ${
+              count === 1 ? "cursor-not-allowed" : ""
+            }`}
+          >
+            Prev
+          </button>
+
+          <button
+            onClick={() => (count === 30 ? null : counter(1))}
+            className={`bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r ${
+              count === 30 ? "cursor-not-allowed" : ""
+            }`}
+          >
+            Next
+          </button>
         </div>
       </div>
     </>

@@ -57,6 +57,7 @@ const Quotes = () => {
                 data={data}
                 count={count}
                 setSeeFavList={setSeeFavList}
+                addFavQuotes={addFavQuotes}
               />
             </div>
           );
