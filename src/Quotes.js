@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import QuotesComponent from "./QuotesComp";
+import FavComp from "./FavQuotes";
 
 const Quotes = () => {
   const [data, setData] = useState();
   const [count, setCount] = useState(1);
   const [addFavQuotes, setAddFavQuotes] = useState([]);
+  const [seeFavList, setSeeFavList] = useState(false);
+
   console.log(count, "count");
 
   const fetchAdvice = () => {
@@ -26,13 +29,11 @@ const Quotes = () => {
   }, []);
 
   const counter = (num) => {
-    if (num === 0) {
-      return;
-    }
     setCount(count + num);
   };
 
   const addQuotes = (id) => {
+    debugger;
     const favItem = data?.find((item) => item.id === id);
     if (addFavQuotes?.includes(favItem)) {
       alert("already added");
@@ -44,24 +45,45 @@ const Quotes = () => {
 
   return (
     <div>
-      {data?.slice(count > 0 && count - 1, count)?.map((item) => {
-        return (
-          <div key={item.id}>
-            {addFavQuotes?.length}
-            <QuotesComponent
-              addQuotes={addQuotes}
-              item={item}
-              counter={counter}
-              data={data}
-              count={count}
-            />
-          </div>
-        );
-      })}
+      {!seeFavList &&
+        data?.slice(count - 1, count)?.map((item) => {
+          return (
+            <div key={item?.id}>
+              {addFavQuotes?.length}
+              <QuotesComponent
+                addQuotes={addQuotes}
+                item={item}
+                counter={counter}
+                data={data}
+                count={count}
+                setSeeFavList={setSeeFavList}
+              />
+            </div>
+          );
+        })}
 
-      {addFavQuotes?.map((item) => {
-        return <p>{item.author}</p>;
-      })}
+      {seeFavList &&
+        addFavQuotes?.map((item) => {
+          return (
+            <div key={item.id}>
+              <FavComp item={item} />;
+            </div>
+          );
+        })}
+     {seeFavList && <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          width: "100%",
+        }}
+      >
+        <button
+          onClick={() => setSeeFavList(false)}
+          className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+        >
+          See Quotes
+        </button>
+      </div>}
     </div>
   );
 };
