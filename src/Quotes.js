@@ -49,7 +49,7 @@ const Quotes = () => {
         data?.slice(count - 1, count)?.map((item) => {
           return (
             <div key={item?.id}>
-              {addFavQuotes?.length}
+              {/* {addFavQuotes?.length} */}
               <QuotesComponent
                 addQuotes={addQuotes}
                 item={item}
